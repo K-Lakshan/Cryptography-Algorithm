@@ -3,7 +3,7 @@ public class Main{
     
     public static void main(String[] args) {
         String originalMessage = "Hellow world ";
-        byte[] secretKey = GenerateKey.generate();
+        byte[] secretKey = Key.generateKey();
 
         String encrypted = Encrypt.create(originalMessage,secretKey);
         String decrypted = Decrypt.decode(encrypted, secretKey);
