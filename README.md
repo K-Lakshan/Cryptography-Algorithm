@@ -42,19 +42,3 @@ The decryption reverses the encryption steps in opposite order:
 3. XOR with modValue (same as encryption since XOR is its own inverse)
 4. Subtract modValue from each byte
 
-## Security Considerations
-
-1. **Strengths**:
-   - Multiple transformation layers increase complexity
-   - Key-dependent operations make analysis harder
-   - Uses secure random number generation for keys
-
-2. **Limitations**:
-   - Custom algorithms aren't vetted by cryptanalysis
-   - Vulnerable to known-plaintext attacks
-   - No authentication or integrity checks
-
-3. **Best Practices**:
-   - Use established algorithms (AES, ChaCha20) for production
-   - Always pair encryption with authentication (AEAD)
-   - Use proper key management
