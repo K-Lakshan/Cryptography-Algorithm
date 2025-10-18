@@ -6,7 +6,6 @@ public class Decrypt {
 
     public static String decode(String encryptedText, byte[] key) {
 
-        // Compute same modValue as encryption
         byte min = key[0];
         byte max = key[0];
         for (byte b : key) {
@@ -20,18 +19,16 @@ public class Decrypt {
 
         byte[] unmixed = unmixKey(mixed, key);
 
-        byte[] unxor = toXor(unmixed);
+        byte[] unxor = unXor(unmixed);
             
         byte[] unshifted = unshiftKey(unxor, key);
 
-        // Convert to string
         return new String(unshifted);
     }
 
     private static byte[] unmixKey(byte[] text, byte[] key) {
         int keyLen = key.length;
 
-        // Reverse the order of key mixing
         for (int j = keyLen - 1; j >= 0; j--) {
             for (int i = 0; i < text.length; i++) {
                 int value;
@@ -46,7 +43,7 @@ public class Decrypt {
         return text;
     }
 
-    private static byte[] toXor(byte[] text) {
+    private static byte[] unXor(byte[] text) {
         byte[] result = new byte[text.length];
         for (int i = 0; i < text.length; i++) {
             int xorValue = text[i] ^ modValue; 
