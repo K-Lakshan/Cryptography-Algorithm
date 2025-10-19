@@ -39,12 +39,14 @@ public class Main {
     
     private static void encryptMessage() {
         secretKey = Key.generateKey();
+        byte[] iv = Key.generateIV();
         scanner.nextLine();
         System.out.print("\nEnter message to encrypt: ");
         String message = scanner.nextLine();
         
-        String encrypted = Encrypt.create(message, secretKey);
+        String encrypted = Encrypt.create(message, secretKey, iv);
         System.out.println("\nKey: " + Base64.getEncoder().encodeToString(secretKey));
+        //System.out.println("IV: " + Base64.getEncoder().encodeToString(iv));
         System.out.println("Encrypted: " + encrypted);
     }
     
@@ -53,7 +55,7 @@ public class Main {
         System.out.print("\nEnter encrypted message to decrypt: ");
         String encryptedMessage = scanner.nextLine();
 
-        System.out.print("Enter key: ");
+        System.out.print("Enter key (in Base64): ");
         String key = scanner.nextLine();
         
         try {
@@ -61,7 +63,8 @@ public class Main {
             String decrypted = Decrypt.decode(encryptedMessage.trim(), keyBytes);
             System.out.println("\nDecrypted message: " + decrypted);
         } catch (Exception e) {
-            System.out.println("\nError: Failed to decrypt. Invalid message or key.");
+            System.out.println("\nError: " + e.getMessage());
+            System.out.println("Make sure you're using the correct key and encrypted message.");
         }
     }
     
