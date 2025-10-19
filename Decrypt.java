@@ -17,7 +17,7 @@ public class Decrypt {
 
         byte[] mixed = Base64.getDecoder().decode(encryptedText);
 
-        byte[] unmixed = unmixKey(mixed, key);
+        byte[] unmixed = reverseKeyMixing(mixed, key);
 
         byte[] unxor = unXor(unmixed);
             
@@ -26,17 +26,10 @@ public class Decrypt {
         return new String(unshifted);
     }
 
-    private static byte[] unmixKey(byte[] text, byte[] key) {
-        int keyLen = key.length;
-
-        for (int j = keyLen - 1; j >= 0; j--) {
+    private static byte[] reverseKeyMixing(byte[] text, byte[] key) {
+        for (int j = key.length - 1; j >= 0; j--) {
             for (int i = 0; i < text.length; i++) {
-                int value;
-                if (j % 2 == 0) {
-                    value = text[i] - key[j];
-                } else {
-                    value = text[i] + key[j];
-                }
+                int value = text[i] - key[j];
                 text[i] = (byte) value;
             }
         }

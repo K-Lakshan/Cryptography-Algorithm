@@ -50,7 +50,7 @@ public class Main {
     
     private static void decryptMessage() {
         scanner.nextLine();
-        System.out.print("\nEnter message to decrypt: ");
+        System.out.print("\nEnter encrypted message to decrypt: ");
         String encryptedMessage = scanner.nextLine();
 
         System.out.print("Enter key: ");

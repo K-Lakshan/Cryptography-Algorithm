@@ -26,7 +26,7 @@ public class Encrypt {
         byte[] xor = toXor(shifted);
         //System.out.println("XOR bytes: " + Arrays.toString(xor));
 
-        byte[] mixed = mixKey(xor,key);
+        byte[] mixed = applyKeyMixing(xor,key);
         //System.out.println("Mix bytes: " + Arrays.toString(mixed));
 
         // Base64 encode for readability
@@ -65,20 +65,10 @@ public class Encrypt {
 
     }
 
-    private static byte[] mixKey(byte[] text, byte[] key) {
-        int keyLen = key.length;
-    
-        for (int j = 0; j < keyLen; j++) {
+    private static byte[] applyKeyMixing(byte[] text, byte[] key) {
+        for (int j = 0; j < key.length; j++) {
             for (int i = 0; i < text.length; i++) {
-                int value;
-    
-                if (j % 2 == 0) { 
-                    // even round ADD key
-                    value = text[i] + key[j];
-                } else {
-                    // odd round SUBTRACT key
-                    value = text[i] - key[j];
-                }
+                int value = text[i] + key[j];
                 text[i] = (byte) value;
             }
         }
